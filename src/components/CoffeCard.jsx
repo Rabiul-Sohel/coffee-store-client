@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
-
 const CoffeCard = ({ coffee, coffees, setCoffees }) => {
   const { _id, name, chef, supplier, taste, photo } = coffee;
 
-  
-
-  const handleDelete = id => {  
+  const handleDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -18,24 +15,27 @@ const CoffeCard = ({ coffee, coffees, setCoffees }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-         fetch(`http://localhost:3000/coffee/${id}`, {
-           method: "DELETE",
-         })
-           .then((res) => res.json())
-           .then((data) => {
-             if (data.deletedCount > 0) {
-               const remaining = coffees.filter((coffee) => coffee._id !== id);
-               setCoffees(remaining);
-               Swal.fire({
-                 title: "Deleted!",
-                 text: "Your Coffee has been deleted.",
-                 icon: "success",
-               });
-             }
-           });
+        fetch(
+          `https://coffee-store-server-old-jyym-idrofvbc3-rabiul-sohels-projects.vercel.app/coffee/${id}`,
+          {
+            method: "DELETE",
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.deletedCount > 0) {
+              const remaining = coffees.filter((coffee) => coffee._id !== id);
+              setCoffees(remaining);
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Coffee has been deleted.",
+                icon: "success",
+              });
+            }
+          });
       }
     });
-  }
+  };
 
   return (
     <div className="card card-side bg-base-100 shadow-xl">

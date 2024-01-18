@@ -1,10 +1,9 @@
 import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
-
 const UpdateCoffee = () => {
-  const coffee = useLoaderData()
-   const { _id, name, chef, supplier, taste, photo } = coffee;
+  const coffee = useLoaderData();
+  const { _id, name, chef, supplier, taste, photo } = coffee;
   const handleUpdate = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -13,18 +12,19 @@ const UpdateCoffee = () => {
     const taste = form.taste.value;
     const supplier = form.supplier.value;
     const photo = form.photo.value;
-    const coffee = { name, chef, supplier, taste, photo }
-    ;
-    fetch(`http://localhost:3000/coffee/${_id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": 'application/json'
-      },
-      body: JSON.stringify(coffee)
-
-    })
-      .then(res => res.json())
-      .then(data => {
+    const coffee = { name, chef, supplier, taste, photo };
+    fetch(
+      `https://coffee-store-server-old-jyym-idrofvbc3-rabiul-sohels-projects.vercel.app/coffee/${_id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(coffee),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
         if (data.modifiedCount > 0) {
           Swal.fire({
@@ -34,11 +34,10 @@ const UpdateCoffee = () => {
             confirmButtonText: "Ok",
           });
         }
-      })
-  }
+      });
+  };
   return (
     <div>
-     
       <div>
         <h2 className="text-3xl font-bold">
           Update the Information of {name}{" "}

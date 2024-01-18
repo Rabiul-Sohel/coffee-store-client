@@ -1,30 +1,31 @@
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
 
-
 const SignUp = () => {
-  const {createUser} = useAuth()
-  const handleSignUp = e => {
-    e.preventDefault()
+  const { createUser } = useAuth();
+  const handleSignUp = (e) => {
+    e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
 
     createUser(email, password)
-      .then(res => {
-        
+      .then((res) => {
         const createdAt = res.user.metadata.creationTime;
-        const user = {email, createdAt}
+        const user = { email, createdAt };
         console.log(res.user);
-        fetch("http://localhost:3000/users", {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(user)
-        })
-          .then(res => res.json())
-          .then(data => {
+        fetch(
+          "https://coffee-store-server-old-jyym-idrofvbc3-rabiul-sohels-projects.vercel.app/users",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
             if (data.insertedId) {
               Swal.fire({
                 title: "Success!",
@@ -32,13 +33,12 @@ const SignUp = () => {
                 icon: "success",
                 confirmButtonText: "Cool",
               });
-              
             }
-          })
+          });
       })
-      .catch(err => console.log(err))
-    form.reset()
-  }
+      .catch((err) => console.log(err));
+    form.reset();
+  };
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">

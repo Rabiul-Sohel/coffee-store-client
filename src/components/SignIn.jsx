@@ -1,32 +1,35 @@
-import React from 'react';
-import useAuth from '../hooks/useAuth';
+import React from "react";
+import useAuth from "../hooks/useAuth";
 
 const SignIn = () => {
-  const {userSignIn} = useAuth()
-  const handleSignIn = e => {
-    e.preventDefault()
+  const { userSignIn } = useAuth();
+  const handleSignIn = (e) => {
+    e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
     userSignIn(email, password)
-      .then(res => {
+      .then((res) => {
         const user = {
           email,
-          lastLoggedTime: res.user?.metadata?.lastSignInTime
-        }
-        fetch(`http://localhost:3000/user`, {
-          method: 'PATCH',
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify(user)
-        })
-          .then(res => res.json())
-          .then(data => console.log(data))
+          lastLoggedTime: res.user?.metadata?.lastSignInTime,
+        };
+        fetch(
+          `https://coffee-store-server-old-jyym-idrofvbc3-rabiul-sohels-projects.vercel.app/user`,
+          {
+            method: "PATCH",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => console.log(data));
       })
-      .catch(err => console.log(err))
-  }
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -46,7 +49,7 @@ const SignIn = () => {
               </label>
               <input
                 type="email"
-                name='email'
+                name="email"
                 placeholder="email"
                 className="input input-bordered"
                 required
@@ -59,7 +62,7 @@ const SignIn = () => {
               <input
                 type="password"
                 placeholder="password"
-                name='password'
+                name="password"
                 className="input input-bordered"
                 required
               />
